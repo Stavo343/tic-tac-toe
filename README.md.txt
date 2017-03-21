@@ -1,0 +1,1 @@
+This tic tac toe game has an unbeatable AI using the minimax algorithm (kindly explained by Ahmad Abdolsaheb at http://abdolsa.com). This project is for the freecodecamp curriculum.

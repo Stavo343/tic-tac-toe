@@ -25,7 +25,7 @@
 }
 
 #chalkboard {
-	background: grey;
+	background: black;
 	color: black;
 	padding: 5px;
 }
@@ -171,12 +171,12 @@ function neutrals(map) {
 }
 
 function hastalavista(battlefield, soldier) {
-	if ((battlefield[0] == soldier && battlefield[1] == soldier && battlefield[2] == soldier) || 
-	    (battlefield[3] == soldier && battlefield[4] == soldier && battlefield[5] == soldier) || 
-	    (battlefield[6] == soldier && battlefield[7] == soldier && battlefield[8] == soldier) || 
-	    (battlefield[0] == soldier && battlefield[3] == soldier && battlefield[6] == soldier) || 
-	    (battlefield[1] == soldier && battlefield[4] == soldier && battlefield[7] == soldier) || 
-	    (battlefield[2] == soldier && battlefield[5] == soldier && battlefield[8] == soldier) || 
+	if ((battlefield[0] == soldier && battlefield[1] == soldier && battlefield[2] == soldier) ||
+	    (battlefield[3] == soldier && battlefield[4] == soldier && battlefield[5] == soldier) ||
+	    (battlefield[6] == soldier && battlefield[7] == soldier && battlefield[8] == soldier) ||
+	    (battlefield[0] == soldier && battlefield[3] == soldier && battlefield[6] == soldier) ||
+	    (battlefield[1] == soldier && battlefield[4] == soldier && battlefield[7] == soldier) ||
+	    (battlefield[2] == soldier && battlefield[5] == soldier && battlefield[8] == soldier) ||
 	    (battlefield[0] == soldier && battlefield[4] == soldier && battlefield[8] == soldier) ||
 	    (battlefield[6] == soldier && battlefield[4] == soldier && battlefield[2] == soldier)) {
 		return true;
@@ -189,9 +189,9 @@ function hastalavista(battlefield, soldier) {
 algorithm for an unbeatable tic tac toe AI at http://abdolsa.com. I still think I only understand 90% of it, but his help has been essential to this project.*/
 
 function minimax(potential, soldier) {
-	
+
 	var swiss = neutrals(potential);
-	
+
 	if (hastalavista(potential, connor)) {
 		return {performance: -10};
 	} else if (hastalavista(potential, skynet)) {
@@ -199,16 +199,16 @@ function minimax(potential, soldier) {
 	} else if (swiss.length === 0) {
 		return {performance: 0};
 	}
-	
+
 	var tactics = [];
-	
+
 	for (var i = 0; i < swiss.length; i++) {
 		var tactic = {};
-		
+
 		tactic.logged = potential[swiss[i]];
-		
+
 		potential[swiss[i]] = soldier;
-		
+
 		if (soldier == skynet) {
 			var result = minimax(potential, connor);
 			tactic.performance = result.performance;
@@ -216,18 +216,18 @@ function minimax(potential, soldier) {
 			var result = minimax(potential, skynet);
 			tactic.performance = result.performance;
 		}
-		
+
 		potential[swiss[i]] = tactic.logged;
-		
+
 		tactics.push(tactic);
 	}
-	
+
 	var optimalTactic;
-	
+
 	if (soldier == skynet) {
-		
+
 		var modelT = -2000;
-		
+
 		for (var i = 0; i < tactics.length; i++) {
 			if (tactics[i].performance > modelT) {
 				modelT = tactics[i].performance;
@@ -235,9 +235,9 @@ function minimax(potential, soldier) {
 			}
 		}
 	} else {
-		
+
 		var modelT = 3000;
-		
+
 		for (var i = 0; i < tactics.length; i++) {
 			if (tactics[i].performance < modelT) {
 				modelT = tactics[i].performance;
@@ -245,8 +245,8 @@ function minimax(potential, soldier) {
 			}
 		}
 	}
-	
-	return tactics[optimalTactic]; 
+
+	return tactics[optimalTactic];
 }
 
 function terminate(fire) {
@@ -398,7 +398,7 @@ $("#oh").on("click", function() {
 });
 
 $("#zero").on("click", function() {
-	if (typeof battlefield[0] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[0] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#zero").hide().html(connor).fadeIn(1000);
 		battlefield[0] = connor;
@@ -407,7 +407,7 @@ $("#zero").on("click", function() {
 });
 
 $("#one").on("click", function() {
-	if (typeof battlefield[1] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[1] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#one").hide().html(connor).fadeIn(1000);
 		battlefield[1] = connor;
@@ -416,7 +416,7 @@ $("#one").on("click", function() {
 });
 
 $("#two").on("click", function() {
-	if (typeof battlefield[2] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[2] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#two").hide().html(connor).fadeIn(1000);
 		battlefield[2] = connor;
@@ -425,7 +425,7 @@ $("#two").on("click", function() {
 });
 
 $("#three").on("click", function() {
-	if (typeof battlefield[3] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[3] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#three").hide().html(connor).fadeIn(1000);
 		battlefield[3] = connor;
@@ -434,7 +434,7 @@ $("#three").on("click", function() {
 });
 
 $("#four").on("click", function() {
-	if (typeof battlefield[4] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[4] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#four").hide().html(connor).fadeIn(1000);
 		battlefield[4] = connor;
@@ -443,7 +443,7 @@ $("#four").on("click", function() {
 });
 
 $("#five").on("click", function() {
-	if (typeof battlefield[5] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[5] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#five").hide().html(connor).fadeIn(1000);
 		battlefield[5] = connor;
@@ -452,7 +452,7 @@ $("#five").on("click", function() {
 });
 
 $("#six").on("click", function() {
-	if (typeof battlefield[6] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[6] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#six").hide().html(connor).fadeIn(1000);
 		battlefield[6] = connor;
@@ -461,7 +461,7 @@ $("#six").on("click", function() {
 });
 
 $("#seven").on("click", function() {
-	if (typeof battlefield[7] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[7] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#seven").hide().html(connor).fadeIn(1000);
 		battlefield[7] = connor;
@@ -470,7 +470,7 @@ $("#seven").on("click", function() {
 });
 
 $("#eight").on("click", function() {
-	if (typeof battlefield[8] == "number" && skynet !== undefined && stasis == 1) {	
+	if (typeof battlefield[8] == "number" && skynet !== undefined && stasis == 1) {
 		stasis = 0;
 		$("#eight").hide().html(connor).fadeIn(1000);
 		battlefield[8] = connor;

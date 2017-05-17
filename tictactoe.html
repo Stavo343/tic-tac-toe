@@ -1,301 +1,328 @@
 <html>
 <head>
-<style>
-
-#canvas {
-	background: beige;
-	color: black;
-	width: 214px;
-	height: 284px;
-	padding: 10px;
-	margin: 10px;
-	text-align: center;
-}
-
-#ex {
-	text-align: center;
-	cursor: pointer;
-	display: inline-block;
-}
-
-#oh {
-	text-align: center;
-	cursor: pointer;
-	display: inline-block;
-}
-
-#chalkboard {
-	background: black;
-	color: black;
-	padding: 5px;
-}
-
-.box {
-	height: 60px;
-	width: 60px;
-	display: inline-block;
-}
-
-.entry {
-	height: 42px;
-	width: 60px;
-	padding-top: 18px;
-	text-align: center;
-	background: black;
-	color: green;
-	float: right;
-	cursor: pointer;
-}
-
-#zero {
-	border-right: 1px solid green;
-	border-bottom: 1px solid green;
-}
-
-#one {
-	border-bottom: 1px solid green;
-	border-right: 1px solid green;
-	border-left: 1px solid green;
-}
-
-#two {
-	border-left: 1px solid green;
-	border-bottom: 1px solid green;
-}
-
-#three {
-	border-top: 1px solid green;
-	border-right: 1px solid green;
-	border-bottom: 1px solid green;
-}
-
-#four {
-	border: 1px solid green;
-}
-
-#five {
-	border-left: 1px solid green;
-	border-top: 1px solid green;
-	border-bottom: 1px solid green;
-}
-
-#six {
-	border-top: 1px solid green;
-	border-right: 1px solid green;
-}
-
-#seven {
-	border-top: 1px solid green;
-	border-left: 1px solid green;
-	border-right: 1px solid green;
-}
-
-#eight {
-	border-top: 1px solid green;
-	border-left: 1px solid green;
-}
-
-</style>
-</head>
-<body>
-<div id="canvas">
-<h1>Tic Tac Toe</h1>
-<div id="result">
-</div>
-<div id="choose">
-Choose:
-<div id="oh">
-O
-</div>
-<div id="ex">
-X
-</div>
-</div>
-<div id="chalkboard">
-<div class="box">
-<div id="zero" class="entry">
-</div>
-</div>
-<div class="box">
-<div id="one" class="entry">
-</div>
-</div>
-<div class="box">
-<div id="two" class="entry">
-</div>
-</div>
-<div class="box">
-<div id="three" class="entry">
-</div>
-</div>
-<div class="box">
-<div id="four" class="entry">
-</div>
-</div>
-<div class="box">
-<div id="five" class="entry">
-</div>
-</div>
-<div class="box">
-<div id="six" class="entry">
-</div>
-</div>
-<div class="box">
-<div id="seven" class="entry">
-</div>
-</div>
-<div class="box">
-<div id="eight" class="entry">
-</div>
-</div>
-</div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script>
-
-var battlefield = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-var stasis = 1;
-var connor;
-var skynet;
-var targetArea;
-var aim;
-
-function neutrals(map) {
-	var swiss = [];
-	for (var i = 0; i < map.length; i++) {
-		if(map[i] != "O" && map[i] != "X") {
-			swiss.push(map[i]);
-		}
+  <title>Tic Tac Toe</title>
+  <style>
+	@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
+	@import url('https://fonts.googleapis.com/css?family=Schoolbell');
+	
+	#canvas {
+		background: beige;
+		color: black;
+		width: 214px;
+		height: 284px;
+		padding: 10px;
+		position: absolute;
+		margin: 5% -50% 20% 50%;
+		transform: translate(-50%);
+		text-align: center;
 	}
-	return swiss;
-}
+	
+	#title {
+		font-family: Fredericka the Great;
+	}
 
-function hastalavista(battlefield, soldier) {
-	if ((battlefield[0] == soldier && battlefield[1] == soldier && battlefield[2] == soldier) ||
-	    (battlefield[3] == soldier && battlefield[4] == soldier && battlefield[5] == soldier) ||
-	    (battlefield[6] == soldier && battlefield[7] == soldier && battlefield[8] == soldier) ||
-	    (battlefield[0] == soldier && battlefield[3] == soldier && battlefield[6] == soldier) ||
-	    (battlefield[1] == soldier && battlefield[4] == soldier && battlefield[7] == soldier) ||
-	    (battlefield[2] == soldier && battlefield[5] == soldier && battlefield[8] == soldier) ||
+	#choose, #ex, #oh, #result {
+		font-family: schoolbell;
+	}
+	
+	#ex {
+		text-align: center;
+		cursor: pointer;
+		display: inline-block;
+	}
+	
+	#oh {
+		text-align: center;
+		cursor: pointer;
+		display: inline-block;
+	}
+	
+	#chalkboard {
+		background: black;
+		color: black;
+		padding: 5px;
+	}
+	
+	.box {
+		height: 60px;
+		width: 60px;
+		display: inline-block;
+	}
+	
+	.entry {
+		height: 42px;
+		width: 60px;
+		padding-top: 18px;
+		text-align: center;
+		background: black;
+		color: green;
+		float: right;
+		cursor: pointer;
+	}
+	
+	#zero {
+		border-right: 1px solid green;
+		border-bottom: 1px solid green;
+	}
+	
+	#one {
+		border-bottom: 1px solid green;
+		border-right: 1px solid green;
+		border-left: 1px solid green;
+	}
+	
+	#two {
+		border-left: 1px solid green;
+		border-bottom: 1px solid green;
+	}
+	
+	#three {
+		border-top: 1px solid green;
+		border-right: 1px solid green;
+		border-bottom: 1px solid green;
+	}
+	
+	#four {
+		border: 1px solid green;
+	}
+	
+	#five {
+		border-left: 1px solid green;
+		border-top: 1px solid green;
+		border-bottom: 1px solid green;
+	}
+	
+	#six {
+		border-top: 1px solid green;
+		border-right: 1px solid green;
+	}
+	
+	#seven {
+		border-top: 1px solid green;
+		border-left: 1px solid green;
+		border-right: 1px solid green;
+	}
+	
+	#eight {
+		border-top: 1px solid green;
+		border-left: 1px solid green;
+	}
+	
+  </style>
+  </head>
+  <body>
+	<div id="canvas">
+	  <h1 id="title">Tic Tac Toe</h1>
+	  <div id="result">
+	  </div>
+	  <div id="choose">
+		Choose:
+		<div id="oh">
+		  O
+		</div>
+		<div id="ex">
+		  X
+		</div>
+	  </div>
+	  <div id="chalkboard">
+		<div class="box">
+		  <div id="zero" class="entry">
+		  </div>
+		</div>
+		<div class="box">
+		  <div id="one" class="entry">
+		  </div>
+		</div>
+		<div class="box">
+		  <div id="two" class="entry">
+		  </div>
+		</div>
+		<div class="box">
+		  <div id="three" class="entry">
+		  </div>
+		</div>
+		<div class="box">
+		  <div id="four" class="entry">
+		  </div>
+		</div>
+		<div class="box">
+		  <div id="five" class="entry">
+		  </div>
+		</div>
+		<div class="box">
+		  <div id="six" class="entry">
+		  </div>
+		</div>
+		<div class="box">
+		  <div id="seven" class="entry">
+		  </div>
+		</div>
+		<div class="box">
+		  <div id="eight" class="entry">
+		  </div>
+		</div>
+	  </div>
+	  <div>
+		coded by <a href="#">Stephen Nierste</a>
+	  </div>
+	</div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script>
+
+	var battlefield = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+	var stasis = 1;
+	var connor;
+	var skynet;
+	var targetArea;
+	var aim;
+	
+	//Identify empty spaces
+	function neutrals(map) {
+		var swiss = [];
+		for (var i = 0; i < map.length; i++) {
+			if(map[i] != "O" && map[i] != "X") {
+				swiss.push(map[i]);
+			}
+		}
+		return swiss;
+	}
+	
+	//Check for win conditions
+	function hastalavista(battlefield, soldier) {
+		if ((battlefield[0] == soldier && battlefield[1] == soldier && battlefield[2] == soldier) || 
+	    (battlefield[3] == soldier && battlefield[4] == soldier && battlefield[5] == soldier) || 
+	    (battlefield[6] == soldier && battlefield[7] == soldier && battlefield[8] == soldier) || 
+	    (battlefield[0] == soldier && battlefield[3] == soldier && battlefield[6] == soldier) || 
+	    (battlefield[1] == soldier && battlefield[4] == soldier && battlefield[7] == soldier) || 
+	    (battlefield[2] == soldier && battlefield[5] == soldier && battlefield[8] == soldier) || 
 	    (battlefield[0] == soldier && battlefield[4] == soldier && battlefield[8] == soldier) ||
 	    (battlefield[6] == soldier && battlefield[4] == soldier && battlefield[2] == soldier)) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-/*MANY thanks to Ahmad Abdolsaheb for walking through the minimax
-algorithm for an unbeatable tic tac toe AI at http://abdolsa.com. I still think I only understand 90% of it, but his help has been essential to this project.*/
-
-function minimax(potential, soldier) {
-
-	var swiss = neutrals(potential);
-
-	if (hastalavista(potential, connor)) {
-		return {performance: -10};
-	} else if (hastalavista(potential, skynet)) {
-		return {performance: 10};
-	} else if (swiss.length === 0) {
-		return {performance: 0};
-	}
-
-	var tactics = [];
-
-	for (var i = 0; i < swiss.length; i++) {
-		var tactic = {};
-
-		tactic.logged = potential[swiss[i]];
-
-		potential[swiss[i]] = soldier;
-
-		if (soldier == skynet) {
-			var result = minimax(potential, connor);
-			tactic.performance = result.performance;
+			return true;
 		} else {
-			var result = minimax(potential, skynet);
-			tactic.performance = result.performance;
+			return false;
 		}
-
-		potential[swiss[i]] = tactic.logged;
-
-		tactics.push(tactic);
 	}
+	
+	/*MANY thanks to Ahmad Abdolsaheb for walking through the minimax algorithm for an unbeatable tic tac toe AI at http://abdolsa.com. I still think I only understand 90% of it, but his help has been essential to this project.*/
 
-	var optimalTactic;
-
-	if (soldier == skynet) {
-
-		var modelT = -2000;
-
-		for (var i = 0; i < tactics.length; i++) {
-			if (tactics[i].performance > modelT) {
+	//Choose best move
+	function minimax(potential, soldier) {
+		
+		//Empty spots
+		var swiss = neutrals(potential);
+		
+		//Check for terminal state and return corresponding score
+		if (hastalavista(potential, connor)) {
+			return {performance: -10};
+		} else if (hastalavista(potential, skynet)) {
+			return {performance: 10};
+		} else if (swiss.length === 0) {
+			return {performance: 0};
+		}
+		
+		var tactics = [];
+		
+		for (var i = 0; i < swiss.length; i++) {
+			var tactic = {};
+			
+			//Record empty space's value
+			tactic.logged = potential[swiss[i]];
+			
+			//Set empty space to current player
+			potential[swiss[i]] = soldier;
+			
+			//Start recursion following up with the alternate player until minimax returns a terminal state value and float that value up to the top level of recursion for the next section to evaluate. This is definitely the most difficult part of the algorithm to understand, and I don't quite follow completely how it all fits together by returning one score instead of a total score for the "most likely to win" choice of move
+			if (soldier == skynet) {
+				var result = minimax(potential, connor);
+				tactic.performance = result.performance;
+			} else {
+				var result = minimax(potential, skynet);
+				tactic.performance = result.performance;
+			}
+			
+			//Reset space back to actual value
+			potential[swiss[i]] = tactic.logged;
+			
+			tactics.push(tactic);
+		}
+		
+		//Looks through scores of the different possible moves and chooses the first highest one to return from the entire minimax function. I'm not sure why it has to find the worst move for the human player since that's never determined by this function, and the recursion should never get past the previous part as I understand it
+		var optimalTactic;
+		
+		if (soldier == skynet) {
+			
+			var modelT = -2000;
+			
+			for (var i = 0; i < tactics.length; i++) {
+				if (tactics[i].performance > modelT) {
 				modelT = tactics[i].performance;
 				optimalTactic = i;
+				}
+			}
+		} else {
+			
+			var modelT = 3000;
+			
+			for (var i = 0; i < tactics.length; i++) {
+				if (tactics[i].performance < modelT) {
+					modelT = tactics[i].performance;
+					optimalTactic = i;
+				}
 			}
 		}
-	} else {
+		
+		return tactics[optimalTactic]; 
+	}
 
-		var modelT = 3000;
-
-		for (var i = 0; i < tactics.length; i++) {
-			if (tactics[i].performance < modelT) {
-				modelT = tactics[i].performance;
-				optimalTactic = i;
-			}
+	//Set skynet's move on the board display
+	function terminate(fire) {
+		switch(fire) {
+			case 0:
+				$("#zero").hide().html(skynet).fadeIn(1000);
+				battlefield[0] = skynet;
+			break;	
+			case 1:
+				$("#one").hide().html(skynet).fadeIn(1000);
+				battlefield[1] = skynet;
+			break;
+			case 2:
+				$("#two").hide().html(skynet).fadeIn(1000);
+				battlefield[2] = skynet;
+			break;
+			case 3:
+				$("#three").hide().html(skynet).fadeIn(1000);
+				battlefield[3] = skynet;
+			break;
+			case 4:
+				$("#four").hide().html(skynet).fadeIn(1000);
+				battlefield[4] = skynet;
+			break;
+			case 5:
+				$("#five").hide().html(skynet).fadeIn(1000);
+				battlefield[5] = skynet;
+			break;
+			case 6:
+				$("#six").hide().html(skynet).fadeIn(1000);
+				battlefield[6] = skynet;
+			break;
+			case 7:
+				$("#seven").hide().html(skynet).fadeIn(1000);
+				battlefield[7] = skynet;
+			break;
+			case 8:
+				$("#eight").hide().html(skynet).fadeIn(1000);
+				battlefield[8] = skynet;
+			break;
 		}
 	}
-
-	return tactics[optimalTactic];
-}
-
-function terminate(fire) {
-	switch(fire) {
-		case 0:
-			$("#zero").hide().html(skynet).fadeIn(1000);
-			battlefield[0] = skynet;
-		break;
-		case 1:
-			$("#one").hide().html(skynet).fadeIn(1000);
-			battlefield[1] = skynet;
-		break;
-		case 2:
-			$("#two").hide().html(skynet).fadeIn(1000);
-			battlefield[2] = skynet;
-		break;
-		case 3:
-			$("#three").hide().html(skynet).fadeIn(1000);
-			battlefield[3] = skynet;
-		break;
-		case 4:
-			$("#four").hide().html(skynet).fadeIn(1000);
-			battlefield[4] = skynet;
-		break;
-		case 5:
-			$("#five").hide().html(skynet).fadeIn(1000);
-			battlefield[5] = skynet;
-		break;
-		case 6:
-			$("#six").hide().html(skynet).fadeIn(1000);
-			battlefield[6] = skynet;
-		break;
-		case 7:
-			$("#seven").hide().html(skynet).fadeIn(1000);
-			battlefield[7] = skynet;
-		break;
-		case 8:
-			$("#eight").hide().html(skynet).fadeIn(1000);
-			battlefield[8] = skynet;
-		break;
-	}
-}
-
-function damageReport() {
-	if (hastalavista(battlefield, connor)) {
+	
+	//Check for human win (should never happen) and if negative, set the next AI move in motion
+	function damageReport() {
+		if (hastalavista(battlefield, connor)) {
 			genisys();
 			timeLoop();
 			setTimeout(function() {
-				stasis = 1;
+			stasis = 1;
 			}, 500);
 		} else {
 			ready();
@@ -304,180 +331,185 @@ function damageReport() {
 				stasis = 1;
 			}, 500);
 		}
-}
+	}
 
-function ready() {
-	targetArea = minimax(battlefield, skynet);
-	aim = targetArea.logged;
-	terminate(aim);
-	stasis = 1;
-}
-
-function timeLoop() {
-	if (hastalavista(battlefield, skynet)) {
-		$("#result").html("DEFEAT!");
-		setTimeout(genisys, 500);
-	} else {
-		var chronoStamp;
-		for (var i = 0; i < 9; i++) {
-			if (typeof battlefield[i] == "number")
-				chronoStamp.push(battlefield[i]);
-		}
-		if (chronoStamp === undefined) {
-			$("#result").html("DRAW!");
+	//Select the best move and implement it
+	function ready() {
+		targetArea = minimax(battlefield, skynet);
+		aim = targetArea.logged;
+		terminate(aim);
+		stasis = 1;
+	}
+	
+	//Check for AI victory or draw conditions and end the game if met
+	function timeLoop() {
+		if (hastalavista(battlefield, skynet)) {
+			$("#result").html("DEFEAT!");
 			setTimeout(genisys, 500);
+		} else {
+			var chronoStamp;
+			for (var i = 0; i < 9; i++) {
+				if (typeof battlefield[i] == "number")
+					chronoStamp.push(battlefield[i]);
+			}
+			if (chronoStamp === undefined) {
+				$("#result").html("DRAW!");
+				setTimeout(genisys, 500);
+			}
 		}
 	}
-}
-
-function genisys() {
-	skynet = undefined;
-	connor = undefined;
-	battlefield = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-	setTimeout(function() {
-		$("#result").html("");
-	}, 1000);
-	setTimeout(function() {
-		$("#choose").fadeIn(500);
-	}, 1500);
-	$("#zero").fadeOut(1000);
-	setTimeout(function() {
-		$("#zero").html("").fadeIn(500);
-	}, 1000);
-	$("#one").fadeOut(1000);
-	setTimeout(function() {
-		$("#one").html("").fadeIn(500);
-	}, 1000);
-	$("#two").fadeOut(1000);
-	setTimeout(function() {
-		$("#two").html("").fadeIn(500);
-	}, 1000);
-	$("#three").fadeOut(1000);
-	setTimeout(function() {
-		$("#three").html("").fadeIn(500);
-	}, 1000);
-	$("#four").fadeOut(1000);
-	setTimeout(function() {
-		$("#four").html("").fadeIn(500);
-	}, 1000);
-	$("#five").fadeOut(1000);
-	setTimeout(function() {
-		$("#five").html("").fadeIn(500);
-	}, 1000);
-	$("#six").fadeOut(1000);
-	setTimeout(function() {
-		$("#six").html("").fadeIn(500);
-	}, 1000);
-	$("#seven").fadeOut(1000);
-	setTimeout(function() {
-		$("#seven").html("").fadeIn(500);
-	}, 1000);
-	$("#eight").fadeOut(1000);
-	setTimeout(function() {
-		$("#eight").html("").fadeIn(500);
-	}, 1000);
-}
-
-$("#ex").on("click", function() {
-	if (skynet == undefined) {
-		connor = "X";
-		skynet = "O";
-		$("#choose").hide();
-		$("#result").html("FIGHT!");
+	
+	//Reset the game
+	function genisys() {
+		skynet = undefined;
+		connor = undefined;
+		battlefield = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+		setTimeout(function() {
+			$("#result").html("");
+		}, 1000);
+		setTimeout(function() {
+			$("#choose").fadeIn(500);
+		}, 1500);
+		$("#zero").fadeOut(1000);
+		setTimeout(function() {
+			$("#zero").html("").fadeIn(500);
+		}, 1000);
+		$("#one").fadeOut(1000);
+		setTimeout(function() {
+			$("#one").html("").fadeIn(500);
+		}, 1000);
+		$("#two").fadeOut(1000);
+		setTimeout(function() {
+			$("#two").html("").fadeIn(500);
+		}, 1000);
+		$("#three").fadeOut(1000);
+		setTimeout(function() {
+			$("#three").html("").fadeIn(500);
+		}, 1000);
+		$("#four").fadeOut(1000);
+		setTimeout(function() {
+			$("#four").html("").fadeIn(500);
+		}, 1000);
+		$("#five").fadeOut(1000);
+		setTimeout(function() {
+			$("#five").html("").fadeIn(500);
+		}, 1000);
+		$("#six").fadeOut(1000);
+		setTimeout(function() {
+			$("#six").html("").fadeIn(500);
+		}, 1000);
+		$("#seven").fadeOut(1000);
+		setTimeout(function() {
+			$("#seven").html("").fadeIn(500);
+		}, 1000);
+		$("#eight").fadeOut(1000);
+		setTimeout(function() {
+			$("#eight").html("").fadeIn(500);
+		}, 1000);
 	}
-});
-
-$("#oh").on("click", function() {
-	if (skynet == undefined) {
-		connor = "O";
-		skynet = "X";
-		$("#choose").hide();
-		$("#result").html("FIGHT!");
-		ready();
-	}
-});
-
-$("#zero").on("click", function() {
-	if (typeof battlefield[0] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#zero").hide().html(connor).fadeIn(1000);
-		battlefield[0] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-$("#one").on("click", function() {
-	if (typeof battlefield[1] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#one").hide().html(connor).fadeIn(1000);
-		battlefield[1] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-$("#two").on("click", function() {
-	if (typeof battlefield[2] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#two").hide().html(connor).fadeIn(1000);
-		battlefield[2] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-$("#three").on("click", function() {
-	if (typeof battlefield[3] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#three").hide().html(connor).fadeIn(1000);
-		battlefield[3] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-$("#four").on("click", function() {
-	if (typeof battlefield[4] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#four").hide().html(connor).fadeIn(1000);
-		battlefield[4] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-$("#five").on("click", function() {
-	if (typeof battlefield[5] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#five").hide().html(connor).fadeIn(1000);
-		battlefield[5] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-$("#six").on("click", function() {
-	if (typeof battlefield[6] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#six").hide().html(connor).fadeIn(1000);
-		battlefield[6] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-$("#seven").on("click", function() {
-	if (typeof battlefield[7] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#seven").hide().html(connor).fadeIn(1000);
-		battlefield[7] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-$("#eight").on("click", function() {
-	if (typeof battlefield[8] == "number" && skynet !== undefined && stasis == 1) {
-		stasis = 0;
-		$("#eight").hide().html(connor).fadeIn(1000);
-		battlefield[8] = connor;
-		setTimeout(damageReport, 1500);
-	}
-});
-
-</script>
-</body>
+	
+	//Player chooses X or O
+	$("#ex").on("click", function() {
+		if (skynet == undefined) {
+			connor = "X";
+			skynet = "O";
+			$("#choose").hide();
+			$("#result").html("Let's play a game...");
+		}
+	});
+	
+	$("#oh").on("click", function() {
+		if (skynet == undefined) {
+			connor = "O";
+			skynet = "X";
+			$("#choose").hide();
+			$("#result").html("Let's play a game...");
+			ready();
+		}
+	});
+	
+	//Activate squares during the game
+	$("#zero").on("click", function() {
+		if (typeof battlefield[0] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#zero").hide().html(connor).fadeIn(1000);
+			battlefield[0] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+	$("#one").on("click", function() {
+		if (typeof battlefield[1] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#one").hide().html(connor).fadeIn(1000);
+			battlefield[1] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+	$("#two").on("click", function() {
+		if (typeof battlefield[2] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#two").hide().html(connor).fadeIn(1000);
+			battlefield[2] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+	$("#three").on("click", function() {
+		if (typeof battlefield[3] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#three").hide().html(connor).fadeIn(1000);
+			battlefield[3] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+	$("#four").on("click", function() {
+		if (typeof battlefield[4] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#four").hide().html(connor).fadeIn(1000);
+			battlefield[4] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+	$("#five").on("click", function() {
+		if (typeof battlefield[5] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#five").hide().html(connor).fadeIn(1000);
+			battlefield[5] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+	$("#six").on("click", function() {
+		if (typeof battlefield[6] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#six").hide().html(connor).fadeIn(1000);
+			battlefield[6] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+	$("#seven").on("click", function() {
+		if (typeof battlefield[7] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#seven").hide().html(connor).fadeIn(1000);
+			battlefield[7] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+	$("#eight").on("click", function() {
+		if (typeof battlefield[8] == "number" && skynet !== undefined && stasis == 1) {	
+			stasis = 0;
+			$("#eight").hide().html(connor).fadeIn(1000);
+			battlefield[8] = connor;
+			setTimeout(damageReport, 1500);
+		}
+	});
+	
+  </script>
+  </body>
 </html>
